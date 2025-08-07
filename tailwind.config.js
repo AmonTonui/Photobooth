@@ -20,6 +20,8 @@ export default {
     'w-full','sm:max-w-md','mt-6',
     'px-6','py-4','bg-white','dark:bg-gray-800',
     'shadow-md','overflow-hidden','sm:rounded-lg',
+    'px-4','py-2','bg-indigo-600','hover:bg-indigo-700','focus:ring-indigo-500',
+    'rounded-md','border','border-gray-300','dark:border-gray-700',
     ],
 
     theme: {
