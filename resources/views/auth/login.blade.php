@@ -42,6 +42,11 @@
                 <x-button class="ms-4">
                     {{ __('Log in') }}
                 </x-button>
+
+                <a href="{{ route('oauth.google.redirect') }}" class="mt-4 inline-flex w-full justify-center rounded-md border px-4 py-2">
+                    Continue with Google
+                </a>
+                
             </div>
         </form>
     </x-authentication-card>
