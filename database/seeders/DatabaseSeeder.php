@@ -14,6 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->withPersonalTeam()->create();
+        $this->call([
+            AdminUserSeeder::class,
+            PackageSeeder::class,
+            // Add other seeders here as needed
+        ]);
 
         User::factory()->withPersonalTeam()->create([
             'name' => 'Test User',
