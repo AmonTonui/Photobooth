@@ -1,0 +1,9 @@
+.git
+node_modules
+vendor
+storage/*.key
+storage/logs/*
+storage/framework/cache/*
+.env
+public/storage
+.DS_Store
