@@ -19,10 +19,12 @@ class DatabaseSeeder extends Seeder
             PackageSeeder::class,
             // Add other seeders here as needed
         ]);
-
-        User::factory()->withPersonalTeam()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        if(app()->environment('local')){
+            User::factory()->withPersonalTeam()->create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+            ]);
+        }        
+            
     }
 }
