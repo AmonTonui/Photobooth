@@ -22,6 +22,8 @@ export default {
     'shadow-md','overflow-hidden','sm:rounded-lg',
     'px-4','py-2','bg-indigo-600','hover:bg-indigo-700','focus:ring-indigo-500',
     'rounded-md','border','border-gray-300','dark:border-gray-700',
+    'mx-auto','max-w-7xl','py-6','sm:px-6','lg:px-8',
+    'text-gray-900','dark:text-gray-100',
     ],
 
     theme: {
