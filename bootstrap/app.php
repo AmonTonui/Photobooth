@@ -3,8 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Request as ProxyRequest; 
 use App\Http\Controllers\Middleware\AdminOnly;
 
 
@@ -17,20 +16,23 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+
+
         $middleware->trustProxies(
             at: '*',
-            headers: SymfonyRequest::HEADER_X_FORWARDED_FOR
-                   | SymfonyRequest::HEADER_X_FORWARDED_HOST
-                   | SymfonyRequest::HEADER_X_FORWARDED_PORT
-                   | SymfonyRequest::HEADER_X_FORWARDED_PROTO
+            headers: 
+            ProxyRequest::HEADER_X_FORWARDED_FOR
+            | ProxyRequest::HEADER_X_FORWARDED_HOST
+            | ProxyRequest::HEADER_X_FORWARDED_PORT
+            | ProxyRequest::HEADER_X_FORWARDED_PROTO
         );
-    })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create()
 
-    ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => AdminOnly::class,
         ]);
-    });
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();
+
+    

@@ -32,3 +32,8 @@ Route::get('/auth/google/callback', function () {
     Auth::login($user, remember: true);
     return redirect()->intended('/dashboard');
 })->name('oauth.google.callback');
+
+// Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+//     Route::get('/admin', fn() => view('admin.dashboard'))->name('admin.dashboard');
+//     // other admin routes...
+// });
