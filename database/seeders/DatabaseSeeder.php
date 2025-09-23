@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminUserSeeder::class,
             PackageSeeder::class,
-            // Add other seeders here as needed
+            
         ]);
         if(app()->environment('local')){
             User::factory()->withPersonalTeam()->create([

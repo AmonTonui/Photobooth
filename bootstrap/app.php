@@ -20,19 +20,19 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->trustProxies(
             at: '*',
-            headers: 
-            ProxyRequest::HEADER_X_FORWARDED_FOR
-            | ProxyRequest::HEADER_X_FORWARDED_HOST
-            | ProxyRequest::HEADER_X_FORWARDED_PORT
-            | ProxyRequest::HEADER_X_FORWARDED_PROTO
+            // headers: 
+            // ProxyRequest::HEADER_X_FORWARDED_FOR
+            // | ProxyRequest::HEADER_X_FORWARDED_HOST
+            // | ProxyRequest::HEADER_X_FORWARDED_PORT
+            // | ProxyRequest::HEADER_X_FORWARDED_PROTO
         );
 
         $middleware->alias([
             'admin' => AdminOnly::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(fn () => null) 
         //
-    })->create();
+    ->create();
 
     
