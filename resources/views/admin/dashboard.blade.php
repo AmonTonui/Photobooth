@@ -1,0 +1,34 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" >{{ __('Admin Dashboard') }}</h2>
+    </x-slot>
+
+    @php
+        $from = now()->startOfMonth(); $to = now()->endOfMonth();
+        $bookings = \App\Models\Booking::whereBetween('created_at', [$from,$to])->count();
+        // $revenue  = (float)\App\Models\Payment::whereBetween('paid_at', [$from,$to])->sum('amount');
+        // $expenses = (float)\App\Models\Expense::whereBetween('incurred_at', [$from,$to])->sum('amount');
+        $profit   = $revenue - $expenses;
+    @endphp
+
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="text-sm text-gray-500">Bookings (month)</div>
+                <div class="mt-2 text-3xl font-semibold">{{ $bookings }}</div>
+            </div>
+            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="text-sm text-gray-500">Revenue (month)</div>
+                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($revenue,2) }}</div>
+            </div>
+            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="text-sm text-gray-500">Expenses (month)</div>
+                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($expenses,2) }}</div>
+            </div>
+            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
+                <div class="text-sm text-gray-500">Net Profit</div>
+                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($profit,2) }}</div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
