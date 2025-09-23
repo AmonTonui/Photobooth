@@ -4,7 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Symfony\Component\HttpFoundation\Request as ProxyRequest; 
-use App\Http\Controllers\Middleware\AdminOnly;
+use App\Http\Middleware\AdminOnly;
 
 
 return Application::configure(basePath: dirname(__DIR__))

@@ -33,7 +33,7 @@ Route::get('/auth/google/callback', function () {
     return redirect()->intended('/dashboard');
 })->name('oauth.google.callback');
 
-// Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-//     Route::get('/admin', fn() => view('admin.dashboard'))->name('admin.dashboard');
-//     // other admin routes...
-// });
+Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+    Route::get('/admin', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    // other admin routes...
+});
