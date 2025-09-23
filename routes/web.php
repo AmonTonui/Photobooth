@@ -33,7 +33,14 @@ Route::get('/auth/google/callback', function () {
     return redirect()->intended('/dashboard');
 })->name('oauth.google.callback');
 
+
+// Admin routes
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/admin', fn() => view('admin.dashboard'))->name('admin.dashboard');
     // other admin routes...
+    Route::resource('admin/packages', \App\Http\Controllers\Admin\PackageController::class);
+    Route::resource('admin/extras', \App\Http\Controllers\Admin\ExtraController::class);
+    Route::resource('admin/bookings', \App\Http\Controllers\Admin\BookingController::class)->only(['index','show']);
 });
+
+
