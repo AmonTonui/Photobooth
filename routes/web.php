@@ -17,7 +17,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         $u = Auth::user();
-        if ($u && ($u->role === 'admin')) {           
+        if ($u && $u->role === 'admin') {           
             return redirect()->route('admin.dashboard');
         }
         return view('dashboard');

@@ -15,7 +15,7 @@ class AdminOnly
     {
         $u = $request->user();
         $ok = $u && (
-            (property_exists($u, 'role') && $u->role === 'admin') ||
+            (property_exists($u, 'role') && $u->role === ['admin', 'staff']) ||
             (property_exists($u, 'is_admin') && (int)$u->is_admin === 1) ||
             (method_exists($u, 'isAdmin') && $u->isAdmin())
         );
