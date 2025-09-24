@@ -11,16 +11,22 @@ class AdminOnly
     /**
      * Handle an incoming request.
      */
-    public function handle($request, Closure $next):Response
+    public function handle(Request $request, Closure $next):Response
     {
         $u = $request->user();
-        $ok = $u && (
-            (property_exists($u, 'role') && $u->role === ['admin', 'staff']) ||
-            (property_exists($u, 'is_admin') && (int)$u->is_admin === 1) ||
-            (method_exists($u, 'isAdmin') && $u->isAdmin())
-        );
 
-        abort_unless($ok, 403, 'Unauthorized access');
+        if (! $u) {
+            return redirect()->route('login');
+        }
+
+        // Allow true admin in any of these shapes
+        $isAdmin = strtolower((string)($u->role ?? '')) === 'admin'
+            || (isset($u->is_admin) && (int) $u->is_admin === 1)
+            || (method_exists($u, 'isAdmin') && $u->isAdmin());
+
+        if (! $isAdmin) {
+            abort(403, 'Unauthorized access');
+        }
 
         return $next($request);
     }
