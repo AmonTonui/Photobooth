@@ -1,17 +1,14 @@
 <?php
+
 namespace App\Http\Middleware;
 
-use closure;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
+use Closure; 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminOnly
 {
-    /**
-     * Handle an incoming request.
-     */
-    public function handle(Request $request, Closure $next):Response
+    public function handle(Request $request, Closure $next): Response
     {
         $u = $request->user();
 
@@ -19,10 +16,13 @@ class AdminOnly
             return redirect()->route('login');
         }
 
-        // Allow true admin in any of these shapes
-        $isAdmin = strtolower((string)($u->role ?? '')) === 'admin'
-            || (isset($u->is_admin) && (int) $u->is_admin === 1)
-            || (method_exists($u, 'isAdmin') && $u->isAdmin());
+        // allow admin (and staff if you want)
+        $isAdmin = in_array(
+            strtolower((string) ($u->role ?? '')),
+            ['admin'], 
+            true
+        ) || (isset($u->is_admin) && (int) $u->is_admin === 1)
+          || (method_exists($u, 'isAdmin') && $u->isAdmin());
 
         if (! $isAdmin) {
             abort(403, 'Unauthorized access');
