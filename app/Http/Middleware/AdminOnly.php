@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,19 +10,21 @@ class AdminOnly
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $u = $request->user();
-        if (! $u){
-            return redirect()->route('login');
-        } 
+        $user = $request->user();
 
-        $ok = 
-            (property_exists($u, 'role') && in_array($u->role, ['admin', 'staff'], true)) ||
-            (property_exists($u, 'is_admin') && (int) $u->is_admin === 1) ||
-            (method_exists($u, 'isAdmin') && $u->isAdmin());
-    
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        // Read Eloquent attributes safely
+        $role        = $user->getAttribute('role');        
+        $isAdminFlag = (bool) ($user->getAttribute('is_admin') ?? false);
+        $viaMethod   = method_exists($user, 'isAdmin') ? (bool) $user->isAdmin() : false;
+
+        $ok = $isAdminFlag || $viaMethod || in_array($role, ['admin', 'staff'], true);
 
         abort_unless($ok, 403, 'Unauthorized access');
-        
+
         return $next($request);
     }
 }
