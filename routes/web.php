@@ -58,3 +58,12 @@ Route::prefix('admin')
         Route::resource('extras',   ExtraController::class);
         Route::resource('bookings', BookingController::class)->only(['index','show']);
     });
+
+// routes/web.php  (inside your existing admin group)
+Route::get('/ping', function () {
+    return response()->json([
+        'ok'   => true,
+        'id'   => auth()->id(),
+        'role' => optional(auth()->user())->role,
+    ]);
+})->name('ping');
