@@ -59,11 +59,16 @@ Route::prefix('admin')
         Route::resource('bookings', BookingController::class)->only(['index','show']);
     });
 
+// Other routes...
 // routes/web.php  (inside your existing admin group)
+
 Route::get('/ping', function () {
+
+    $guard = auth();
+
     return response()->json([
         'ok'   => true,
-        'id'   => auth()->id(),
-        'role' => optional(auth()->user())->role,
+        'id'   => Auth::id(),
+        'role' => optional(Auth::user())->role,
     ]);
 })->name('ping');
