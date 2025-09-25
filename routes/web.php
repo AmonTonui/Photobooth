@@ -52,6 +52,16 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'verified', 'admin'])
     ->group(function () {
+        
+        Route::get('/ping', function () {
+            return response()->json([
+                'ok'   => true,
+                'id'   => Auth::id(),
+                'role' => optional(Auth::user())->role,
+            ]);
+        })->name('ping');
+
+
         Route::view('/', 'admin.dashboard')->name('dashboard');
 
         Route::resource('packages', PackageController::class);
@@ -61,14 +71,3 @@ Route::prefix('admin')
 
 // Other routes...
 // routes/web.php  (inside your existing admin group)
-
-Route::get('/ping', function () {
-
-    $guard = auth();
-
-    return response()->json([
-        'ok'   => true,
-        'id'   => Auth::id(),
-        'role' => optional(Auth::user())->role,
-    ]);
-})->name('ping');

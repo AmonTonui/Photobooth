@@ -4,10 +4,11 @@
     </x-slot>
 
     @php
-        $from = now()->startOfMonth(); $to = now()->endOfMonth();
+        $from = now()->startOfMonth(); 
+        $to = now()->endOfMonth();
         $bookings = \App\Models\Booking::whereBetween('created_at', [$from,$to])->count();
-        // $revenue  = (float)\App\Models\Payment::whereBetween('paid_at', [$from,$to])->sum('amount');
-        // $expenses = (float)\App\Models\Expense::whereBetween('incurred_at', [$from,$to])->sum('amount');
+        $revenue  = 0.0;
+        $expenses = 0.0;
         $profit   = $revenue - $expenses;
     @endphp
 
