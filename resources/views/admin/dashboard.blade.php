@@ -15,8 +15,8 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-500">Bookings (month)</div>
-                <div class="mt-2 text-3xl font-semibold">{{ $bookings }}</div>
+                <div class="text-sm text-gray-800 dark:text-gray-200">Bookings (month)</div>
+                <div class="mt-2 text-3xl text-gray-800 dark:text-gray-200">{{ $bookings }}</div>
             </div>
             <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
                 <div class="text-sm text-gray-800 dark:text-gray-200">Revenue (month)</div>
