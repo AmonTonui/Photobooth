@@ -19,16 +19,16 @@
                 <div class="mt-2 text-3xl font-semibold">{{ $bookings }}</div>
             </div>
             <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-500">Revenue (month)</div>
-                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($revenue,2) }}</div>
+                <div class="text-sm text-gray-800 dark:text-gray-200">Revenue (month)</div>
+                <div class="mt-2 text-3xl text-gray-800 dark:text-gray-200">KSh {{ number_format($revenue,2) }}</div>
             </div>
             <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-500">Expenses (month)</div>
-                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($expenses,2) }}</div>
+                <div class="text-sm text-gray-800 dark:text-gray-200">Expenses (month)</div>
+                <div class="mt-2 text-3xl font-semibold text-gray-800 dark:text-gray-200">KSh {{ number_format($expenses,2) }}</div>
             </div>
             <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-500">Net Profit</div>
-                <div class="mt-2 text-3xl font-semibold">KSh {{ number_format($profit,2) }}</div>
+                <div class="text-sm text-gray-800 dark:text-gray-200">Net Profit</div>
+                <div class="mt-2 text-3xl font-semibold text-gray-800 dark:text-gray-200">KSh {{ number_format($profit,2) }}</div>
             </div>
         </div>
     </div>
