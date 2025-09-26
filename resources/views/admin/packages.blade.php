@@ -11,6 +11,12 @@
             @if (session('ok'))
                 <x-banner>{{ session('ok') }}</x-banner>
             @endif
+            
+            <div class="mt-4">
+                        @if(isset($items) && method_exists($items, 'links'))
+                            {{ $items->links() }}
+                        @endif
+            </div>
 
             <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
                 <div class="overflow-x-auto">

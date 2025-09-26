@@ -15,7 +15,7 @@ class PackageController extends Controller
     {
         //
         $items=Package::latest()->paginate(15); 
-        return view('admin.packages.index', compact('items'));
+        return view('admin.packages', compact('items'));
     }
 
     /**
