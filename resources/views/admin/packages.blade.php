@@ -11,7 +11,7 @@
             @if (session('ok'))
                 <x-banner>{{ session('ok') }}</x-banner>
             @endif
-            
+
             <div class="mt-4">
                         @if(isset($items) && method_exists($items, 'links'))
                             {{ $items->links() }}
@@ -23,9 +23,9 @@
                     <table class="min-w-full text-sm">
                         <thead class="text-gray-500 dark:text-gray-400">
                             <tr>
-                                <th class="py-2 text-left">Name</th>
-                                <th class="py-2 text-left">Base Price</th>
-                                <th class="py-2 text-left">Duration (h)</th>
+                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Name</th>
+                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Base Price</th>
+                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Duration (h)</th>
                                 <th class="py-2"></th>
                             </tr>
                         </thead>
@@ -44,7 +44,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr><td colspan="4" class="py-4 text-center text-gray-500">No packages yet.</td></tr>
+                                <tr><td colspan="4" class="py-4 text-center text-xl text-gray-800 dark:text-gray-200">No packages yet.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
