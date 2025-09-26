@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\{PackageController, ExtraController, BookingController};
+use App\Http\Controllers\Admin\{PackageController, ExtraController, BookingController, DashboardController};
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,17 +52,8 @@ Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'verified', 'admin'])
     ->group(function () {
-        
-        Route::get('/ping', function () {
-            return response()->json([
-                'ok'   => true,
-                'id'   => Auth::id(),
-                'role' => optional(Auth::user())->role,
-            ]);
-        })->name('ping');
-
-
-        Route::view('/', 'admin.dashboard')->name('dashboard');
+        // Route::view('/', 'admin.dashboard')->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('packages', PackageController::class);
         Route::resource('extras',   ExtraController::class);
