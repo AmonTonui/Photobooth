@@ -12,26 +12,7 @@
         $profit   ??= ($revenue - $expenses);
     @endphp
 
-    {{-- <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-800 dark:text-gray-200">Bookings (month)</div>
-                <div class="mt-2 text-3xl text-gray-800 dark:text-gray-200">{{ $bookings }}</div>
-            </div>
-            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-800 dark:text-gray-200">Revenue (month)</div>
-                <div class="mt-2 text-3xl text-gray-800 dark:text-gray-200">KSh {{ number_format($revenue,2) }}</div>
-            </div>
-            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-800 dark:text-gray-200">Expenses (month)</div>
-                <div class="mt-2 text-3xl font-semibold text-gray-800 dark:text-gray-200">KSh {{ number_format($expenses,2) }}</div>
-            </div>
-            <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="text-sm text-gray-800 dark:text-gray-200">Net Profit</div>
-                <div class="mt-2 text-3xl font-semibold text-gray-800 dark:text-gray-200">KSh {{ number_format($profit,2) }}</div>
-            </div>
-        </div>
-    </div> --}}
+   
 
 
     <div class="py-6">

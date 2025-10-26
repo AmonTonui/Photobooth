@@ -15,7 +15,7 @@ class PackageController extends Controller
     {
         //
         $items=Package::latest()->paginate(15); 
-        return view('admin.packages', compact('items'));
+        return view('admin.packages.index', compact('items'));
     }
 
     /**
@@ -34,7 +34,9 @@ class PackageController extends Controller
     {
         //
         $data=$r->validate(['name'=>'required','description'=>'nullable','base_price'=>'required|numeric|min:0','duration_hours'=>'required|integer|min:1']);
+
         Package::create($data);
+
         return redirect()->route('admin.packages.index')->with('ok','Created');
     }
 
@@ -44,6 +46,9 @@ class PackageController extends Controller
     public function show(Package $package)
     {
         //
+        // If you need a details page later:
+        // return view('admin.packages.show', compact('package'));
+        return redirect()->route('admin.packages.edit', $package); // Redirect to edit for now
     }
 
     /**
@@ -62,7 +67,7 @@ class PackageController extends Controller
     {
         //
         $data = $r->validate([
-        'name' => 'required|string|max:120',
+        'name' => 'required|string|max:120|unique:packages,name,'.$package->id,
         'description' => 'nullable|string',
         'base_price' => 'required|numeric|min:0',
         'duration_hours' => 'required|integer|min:1|max:24',
@@ -77,7 +82,12 @@ class PackageController extends Controller
     public function destroy(Package $package)
     {
         //
-        $package->delete();
-        return back()->with('ok','Package deleted');
+        try {
+             $package->delete();
+             return back()->with('ok','Package deleted successfully.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle potential foreign key constraint errors if bookings use this package
+             return back()->withErrors(['error' => 'Cannot delete package as it is currently assigned to bookings.']);
+        }
     }
 }
