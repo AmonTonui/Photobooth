@@ -62,11 +62,11 @@
                                         </td>
                                 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                            <a href="{{ route('admin.packages.edit', $package) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-200">Edit</a>
+                                            <x-secondary-button as="a" href="{{ route('admin.packages.edit', $package) }}">{{ __('Edit') }}</x-secondary-button><br>
                                             <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this package?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-200">Delete</x-button>
+                                                <x-danger-button type="submit">{{ __('Delete') }}</x-danger-button>
                                             </form>
                                         </td>
                                     </tr>
