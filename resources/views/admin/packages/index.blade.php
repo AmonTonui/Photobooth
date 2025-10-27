@@ -11,6 +11,7 @@
             @if (session('ok'))
                 <x-banner>{{ session('ok') }}</x-banner>
             @endif
+            <x-validation-errors class="mb-4" />
 
             <div class="mt-4">
                         @if(isset($items) && method_exists($items, 'links'))
@@ -18,39 +19,75 @@
                         @endif
             </div>
 
-            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full text-sm">
-                        <thead class="text-gray-500 dark:text-gray-400">
-                            <tr>
-                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Name</th>
-                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Base Price</th>
-                                <th class="py-2 text-left text-xl text-gray-800 dark:text-gray-200">Duration (h)</th>
-                                <th class="py-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100/60 dark:divide-gray-700/60">
-                            @forelse($items as $p)
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+                    <div class="overflow-x-auto">
+                        {{-- Added classes for better spacing and alignment --}}
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
                                 <tr>
-                                    <td class="py-2">{{ $p->name }}</td>
-                                    <td class="py-2">KSh {{ number_format($p->base_price, 2) }}</td>
-                                    <td class="py-2">{{ $p->duration_hours }}</td>
-                                    <td class="py-2 text-right space-x-2">
-                                        <x-secondary-button as="a" href="{{ route('admin.packages.edit',$p) }}">Edit</x-secondary-button>
-                                        <form class="inline" method="POST" action="{{ route('admin.packages.destroy',$p) }}">
-                                            @csrf @method('DELETE')
-                                            <x-danger-button onclick="return confirm('Delete this package?')">Delete</x-danger-button>
-                                        </form>
-                                    </td>
+                                    {{-- Added px-6 py-3 text-left --}}
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Name
+                                    </th>
+                                    {{-- Added px-6 py-3 text-left --}}
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Base Price (KSh)
+                                    </th>
+                                    {{-- Added px-6 py-3 text-left --}}
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Duration (Hours)
+                                    </th>
+                                    {{-- Added px-6 py-3 text-right for actions header --}}
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                        Actions
+                                    </th>
                                 </tr>
-                            @empty
-                                <tr><td colspan="4" class="py-4 text-center text-xl text-gray-800 dark:text-gray-200">No packages yet.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                {{-- Ensure $items exists before looping --}}
+                                @forelse ($items ?? [] as $package)
+                                    <tr>
+                                        {{-- Added px-6 py-4 and whitespace-nowrap --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                                            {{ $package->name }}
+                                        </td>
+                                        {{-- Added px-6 py-4 and whitespace-nowrap --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                                            {{ number_format($package->base_price, 2) }}
+                                        </td>
+                                        {{-- Added px-6 py-4 and whitespace-nowrap --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
+                                            {{ $package->duration_hours }}
+                                        </td>
+                                         {{-- Added px-6 py-4, whitespace-nowrap, text-right, and space-x-2 for button spacing --}}
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                            <a href="{{ route('admin.packages.edit', $package) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-200">Edit</a>
+                                            <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this package?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-200">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        {{-- Added px-6 py-4 --}}
+                                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center">
+                                            No packages found. Add one to get started!
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                     {{-- Ensure pagination links exist before rendering --}}
+                    @if (isset($items) && method_exists($items, 'links'))
+                        <div class="mt-4">
+                            {{ $items->links() }}
+                        </div>
+                    @endif
                 </div>
-
-                <div class="mt-4">{{ $items->links() }}</div>
             </div>
         </div>
     </div>
