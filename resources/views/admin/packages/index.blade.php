@@ -2,7 +2,11 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200">Packages</h2>
-            <x-button as="a" href="{{ route('admin.packages.create') }}">+ New Package</x-button>
+            <a href="{{ route('admin.packages.create') }}"class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white
+                    border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest
+                    shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                    dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">+ New Package
+            </a>
         </div>
     </x-slot>
 
@@ -65,9 +69,13 @@
                                            
                                             <div class="flex justify-end items-center space-x-2">
                                               
-                                                <x-secondary-button as="a" href="{{ route('admin.packages.edit', $package) }}">
-                                                    {{ __('Edit') }}
-                                                </x-secondary-button>
+                                                <a href="{{ route('admin.packages.edit', $package) }}"
+                                                    class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500
+                                                            rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm
+                                                            hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500
+                                                            focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                                                    Edit
+                                                </a>
                                                 
                                                 <form action="{{ route('admin.packages.destroy', $package) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this package?');">
                                                     @csrf
