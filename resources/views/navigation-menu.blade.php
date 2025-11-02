@@ -25,6 +25,10 @@
                     <x-nav-link href="{{ route('admin.packages.index') }}" :active="request()->routeIs('admin.packages.*')">
                         {{ __('Packages') }}
                     </x-nav-link>
+
+                    <x-nav-link href="{{ route('admin.extras.index') }}" :active="request()->routeIs('admin.extras.*')">
+                        {{ __('Extras') }}
+                    </x-nav-link>
                     
                 </div>
             </div>

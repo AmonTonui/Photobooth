@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Extra;
 use Illuminate\Http\Request;
 use App\Models\InventoryItem;
+use Illuminate\Support\Facades\Schema;
 
 class ExtraController extends Controller
 {
@@ -15,6 +16,8 @@ class ExtraController extends Controller
     public function index()
     {
         //
+        $items = Extra::with(['inventoryItem'])->latest()->paginate(15);
+        return view('admin.extras.index', compact('items'));
     }
 
     /**
@@ -23,7 +26,10 @@ class ExtraController extends Controller
     public function create()
     {
         //
-        $inventories = InventoryItem::orderBy('name')->get(['id','name']);
+        $inventories = [];
+        if (class_exists(InventoryItem::class) && Schema::hasTable('inventory_items')) {
+             $inventories = InventoryItem::orderBy('name')->get(['id','name']);
+        }
         return view('admin.extras.create', compact('inventories'));
     }
 
@@ -34,13 +40,25 @@ class ExtraController extends Controller
     {
         //
         $data = $r->validate([
-        'name' => 'required|string|max:120',
+        'name' => 'required|string|max:120|unique:extras,name',
         'description' => 'nullable|string',
         'unit_price' => 'required|numeric|min:0',
-        'inventory_id' => 'nullable|exists:inventory_items,id',
-    ]);
-    Extra::create($data);
-    return redirect()->route('admin.extras.index')->with('ok','Extra created');
+        // 'inventory_id' => 'nullable|exists:inventory_items,id',
+        ]);
+        // Extra::create($data);
+        // return redirect()->route('admin.extras.index')->with('ok','Extra created Successfully');
+
+        if (class_exists(InventoryItem::class) && Schema::hasTable('inventory_items')) {
+            $rules['inventory_id'] = 'nullable|exists:inventory_items,id';
+        } else {
+            $rules['inventory_id'] = 'nullable';
+        }
+
+        $data = $r->validate($rules);
+
+        Extra::create($data);
+
+        return redirect()->route('admin.extras.index')->with('ok', 'Extra created Successfully');
     }
 
     /**
@@ -49,6 +67,7 @@ class ExtraController extends Controller
     public function show(Extra $extra)
     {
         //
+        return redirect()->route('admin.extras.edit', $extra);
     }
 
     /**
@@ -57,7 +76,10 @@ class ExtraController extends Controller
     public function edit(Extra $extra)
     {
         //
-        $inventories = InventoryItem::orderBy('name')->get(['id','name']);
+        $inventories = [];
+        if (class_exists(InventoryItem::class) && Schema::hasTable('inventory_items')) {
+             $inventories = InventoryItem::orderBy('name')->get(['id','name']);
+        }
         return view('admin.extras.edit', compact('extra','inventories'));
     }
 
@@ -68,13 +90,25 @@ class ExtraController extends Controller
     {
         //
         $data = $r->validate([
-        'name' => 'required|string|max:120',
+        'name' => 'required|string|max:120|unique:extras,name,'.$extra->id,
         'description' => 'nullable|string',
         'unit_price' => 'required|numeric|min:0',
-        'inventory_id' => 'nullable|exists:inventory_items,id',
+        // 'inventory_id' => 'nullable|exists:inventory_items,id',
         ]);
+        // $extra->update($data);
+        // return redirect()->route('admin.extras.index')->with('ok','Extra updated');
+
+        if (class_exists(InventoryItem::class) && Schema::hasTable('inventory_items')) {
+        $rules['inventory_id'] = 'nullable|exists:inventory_items,id';
+        } else {
+            $rules['inventory_id'] = 'nullable';
+        }
+
+        $data = $r->validate($rules);
+
         $extra->update($data);
-        return redirect()->route('admin.extras.index')->with('ok','Extra updated');
+
+        return redirect()->route('admin.extras.index')->with('ok', 'Extra updated');
     }
 
     /**
@@ -83,7 +117,12 @@ class ExtraController extends Controller
     public function destroy(Extra $extra)
     {
         //
-        $extra->delete();
-        return back()->with('ok','Extra deleted');
+        try {
+            $extra->delete();
+            return back()->with('ok','Extra deleted successfully.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle potential foreign key constraint errors if bookings use this extra
+             return back()->withErrors(['error' => 'Cannot delete extra as it is currently assigned to bookings.']);
+        }
     }
 }
