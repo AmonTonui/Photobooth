@@ -35,7 +35,7 @@
                                         Name
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                        Price (KSh)
+                                        Unit Price (KSh)
                                     </th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         Description
@@ -52,7 +52,7 @@
                                             {{ $extra->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                                            {{ number_format($extra->price, 2) }}
+                                            {{ number_format($extra->unit_price, 2) }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 max-w-md">
                                             {{ \Illuminate\Support\Str::limit($extra->description, 80) }}
