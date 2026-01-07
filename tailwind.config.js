@@ -9,8 +9,9 @@ export default {
         "./vendor/livewire/livewire/**/*.blade.php",
         "./vendor/laravel/jetstream/**/*.blade.php",
         "./storage/framework/views/*.php",
-        "./resources/views/**/*.blade.php",
-        "./resources/js/**/*.js",
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/*.vue",
     ],
     darkMode: "class",
 
