@@ -3,16 +3,18 @@ import forms from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
-// Force rebuild
+// Force rebuild - Attempt 2
 export default {
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./vendor/livewire/livewire/**/*.blade.php",
         "./vendor/laravel/jetstream/**/*.blade.php",
         "./storage/framework/views/*.php",
-        "./resources/**/*.blade.php",
-        "./resources/**/*.js",
-        "./resources/**/*.vue",
+        "./resources/views/**/*.blade.php",
+        "./resources/js/**/*.js",
+        "./resources/views/layouts/*.blade.php",
+        "./resources/views/partials/**/*.blade.php",
+        "./resources/views/admin/**/*.blade.php",
     ],
     darkMode: "class",
 
@@ -52,6 +54,14 @@ export default {
         "lg:px-8",
         "text-gray-900",
         "dark:text-gray-100",
+        "bg-gray-50",
+        "dark:bg-boxdark-2",
+        "bg-boxdark-2",
+        "dark:text-bodydark",
+        "font-outfit",
+        "overflow-hidden",
+        "overflow-y-auto",
+        "overflow-x-hidden",
     ],
 
     theme: {
